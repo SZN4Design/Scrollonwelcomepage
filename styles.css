@@ -1,0 +1,192 @@
+/* -------------------------------------------------------
+   SZN4 Scroll Hero
+   Palette:
+   #4E392C  main chocolate
+   #443126  deep shadow
+   #5B4436  warm highlight
+   #F4EEE6  cream
+   #C8B79F  sand
+-------------------------------------------------------- */
+
+:root {
+  --brown: #4E392C;
+  --brown-deep: #443126;
+  --brown-soft: #5B4436;
+  --cream: #F4EEE6;
+  --sand: #C8B79F;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--brown);
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  overflow-x: hidden;
+  color: var(--cream);
+  font-family: "DM Sans", Arial, sans-serif;
+
+  background:
+    radial-gradient(circle at 50% 28%,
+      rgba(91, 68, 54, 0.95) 0%,
+      rgba(78, 57, 44, 0.98) 54%,
+      rgba(68, 49, 38, 1) 100%);
+}
+
+/* Very subtle linework / grain so it matches the brown banner set. */
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  pointer-events: none;
+  border: 1px solid rgba(200, 183, 159, 0.08);
+  border-radius: 50%;
+}
+
+body::before {
+  width: 78vw;
+  height: 26vw;
+  top: -15vw;
+  left: -18vw;
+  transform: rotate(12deg);
+}
+
+body::after {
+  width: 64vw;
+  height: 24vw;
+  right: -20vw;
+  bottom: -14vw;
+  transform: rotate(-13deg);
+}
+
+.scroll-stage {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1600px);
+  margin: 0 auto;
+  padding: 34vh 5vw 34vh;
+}
+
+/* Each line gets its own breathing room so it can pass through
+   the visual “magnifying” center of the screen. */
+.zoom-line {
+  min-height: 58vh;
+  display: grid;
+  place-items: center;
+  padding: 5vh 2vw;
+  text-align: center;
+
+  --scale: .76;
+  --opacity: .28;
+  --blur: 2px;
+  --lift: 0px;
+
+  transform: translateY(var(--lift)) scale(var(--scale));
+  opacity: var(--opacity);
+  filter: blur(var(--blur));
+  transform-origin: center;
+  will-change: transform, opacity, filter;
+}
+
+.line-inner {
+  width: min(100%, 1250px);
+}
+
+/* Intro / micro-copy */
+.eyebrow {
+  font-size: clamp(14px, 1.9vw, 30px);
+  font-weight: 500;
+  letter-spacing: clamp(.16em, .55vw, .32em);
+  text-transform: uppercase;
+}
+
+/* Main brand */
+.brand {
+  font-size: clamp(48px, 8.7vw, 150px);
+  font-weight: 700;
+  letter-spacing: clamp(.035em, .20vw, .09em);
+  line-height: .95;
+}
+
+/* Editorial / expressive line */
+.statement {
+  font-family: "Instrument Serif", Georgia, serif;
+  font-size: clamp(34px, 5.2vw, 86px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: .005em;
+  text-wrap: balance;
+}
+
+/* Disciplines */
+.disciplines {
+  font-size: clamp(13px, 1.65vw, 28px);
+  font-weight: 400;
+  letter-spacing: clamp(.10em, .40vw, .23em);
+  text-transform: uppercase;
+  line-height: 1.9;
+}
+
+.disciplines span {
+  display: inline-block;
+  padding: 0 .18em;
+  color: var(--sand);
+}
+
+/* Four simple circles matching the generated banner */
+.circles .line-inner {
+  display: flex;
+  justify-content: center;
+  gap: clamp(24px, 3vw, 52px);
+}
+
+.circle {
+  width: clamp(25px, 3vw, 46px);
+  aspect-ratio: 1;
+  border: 2px solid var(--cream);
+  border-radius: 50%;
+  display: block;
+}
+
+.final-line {
+  color: var(--cream);
+}
+
+/* Mobile tuning */
+@media (max-width: 700px) {
+  .scroll-stage {
+    padding-inline: 7vw;
+  }
+
+  .zoom-line {
+    min-height: 50vh;
+  }
+
+  .statement {
+    line-height: 1.12;
+  }
+
+  .disciplines .line-inner {
+    max-width: 92vw;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .zoom-line {
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+  }
+}
